@@ -35,7 +35,7 @@ int main() {
 
     regex moveR("move (\\d+) from (\\d) to (\\d)");
 
-    // Follow instructions
+    // Follow instructions (this is the only part that differs from part 1)
     while (getline(input, line)) {
         smatch match;
         regex_search(line, match, moveR);
