@@ -40,15 +40,16 @@ int main() {
         smatch match;
         regex_search(line, match, moveR);
 
-        int column = stoi(match[2]) - 1;
+        int column = stoi(match[2]) - 1,
+            amount = stoi(match[1]);
         deque<char> temp;
 
-        for (int i = 0; i < stoi(match[1]); i++) {
+        for (int i = 0; i < amount; i++) {
             temp.push_front(crates[column].front());
             crates[column].pop_front();
         }
 
-        for (int i = 0; i < stoi(match[1]); i++) {
+        for (int i = 0; i < amount; i++) {
             crates[stoi(match[3]) - 1].push_front(temp.front());
             temp.pop_front();
         }
