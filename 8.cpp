@@ -63,7 +63,7 @@ int main() {
     vector<vector<int>> grid;
     int y = 0;
 
-    // Set up grids
+    // Set up grid
     while (getline(input, line)) {
         grid.push_back({});
         for (char c : line) {
