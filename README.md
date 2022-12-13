@@ -16,7 +16,7 @@ Organization is not spectacular to say the least.
 | 7 | ✓ | ✓ | C++ |
 | 8 | ✓ | ✓ | C++ |
 | 9 | ✓ | ✓ | C++ |
-| 10 |  |  |  |
+| 10 | ✓ | ✓ | C++ |
 | 11 |  |  |  |
 | 12 |  |  |  |
 | 13 |  |  |  |
