@@ -3,23 +3,35 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <map>
+#include <cmath>
 using namespace std;
 
 struct Point {
     int row;
     int column;
 
-    bool operator ==(Point other) {
+    bool operator ==(const Point other) const {
         return this->row == other.row && this->column == other.column;
     }
     
-    bool operator !=(Point other) {
-        return !(*this == other);
+    bool operator <(const Point other) const {
+        return sqrt(row*row + column*column) < sqrt(other.row*other.row + other.column*other.column);
     }
 };
 
+static int lowestStepCount = INT_MAX;
+static map<Point, int> memoedResults = {};
+
 int getLowestStepsToFinish(Point current, Point finish, vector<vector<char>> grid, int steps = 0, vector<Point> beenTo = {}) {
-    vector<int> stepResults = {10000};
+    if (lowestStepCount <= steps) {
+        cout <<"Path went over max of " << lowestStepCount << ".\n";
+        return INT_MAX;
+    }
+
+    if (memoedResults.find(current) != memoedResults.end()) return memoedResults[current] + steps;
+
+    vector<int> stepResults = {INT_MAX};
 
     for (int i = 0; i < 4; i++) {
         Point next = {};
@@ -40,14 +52,22 @@ int getLowestStepsToFinish(Point current, Point finish, vector<vector<char>> gri
         // Make sure step is not too high
         if (grid[next.row][next.column] > grid[current.row][current.column] + 1) continue;
 
-        // If we get to the end, return total steps
-        if (next == finish) return steps + 1;
+        // If we get to the end, return total steps and set new lowest
+        if (next == finish) {
+            lowestStepCount = steps + 1;
+            cout <<"Got to end in " << steps + 1 << " steps.\n";
+            return steps + 1;
+        }
 
         beenTo.push_back(current);
         stepResults.push_back(getLowestStepsToFinish(next, finish, grid, steps + 1, beenTo));
     }
 
-    return *min_element(stepResults.begin(), stepResults.end());
+    int minSteps = *min_element(stepResults.begin(), stepResults.end());
+
+    if (minSteps == INT_MAX) return INT_MAX;
+    memoedResults[current] = minSteps - steps;
+    return minSteps;
 }
 
 int main() {
