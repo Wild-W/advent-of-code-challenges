@@ -46,4 +46,6 @@ int main() {
         cycle -= 40;
         cout << screen << '\n';
     }
+
+    return 0;
 }
